@@ -32,4 +32,4 @@ backend/node_modules/
 .env
 backend/.env
 
-dist/
+dist/g
