@@ -1,5 +1,19 @@
 // Адрес API бэкенда. Поменяйте при деплое.
-const API = 'http://localhost:4000/api';
+const API = 'https://mmm-backend-lwnf.onrender.com/api';
+
+const ADMIN_KEY_STORAGE = 'mmm_admin_key';
+
+function getAdminKey() {
+  return sessionStorage.getItem(ADMIN_KEY_STORAGE) || '';
+}
+
+function setAdminKey(key) {
+  sessionStorage.setItem(ADMIN_KEY_STORAGE, key);
+}
+
+function clearAdminKey() {
+  sessionStorage.removeItem(ADMIN_KEY_STORAGE);
+}
 
 const STATUS_LABELS = {
   new: 'Новая',
@@ -8,12 +22,10 @@ const STATUS_LABELS = {
   rejected: 'Отклонено',
 };
 
-// Текущее состояние фильтров
 let currentStatus = '';
 let currentSearch = '';
 let searchTimer = null;
 
-// --- DOM ---
 const tableBody = document.getElementById('tableBody');
 const statsEl = document.getElementById('stats');
 const apiStatus = document.getElementById('apiStatus');
@@ -21,7 +33,6 @@ const modal = document.getElementById('modal');
 const form = document.getElementById('appForm');
 const formError = document.getElementById('formError');
 
-// --- Утилиты ---
 function fmtDate(iso) {
   const d = new Date(iso);
   return d.toLocaleString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
@@ -42,15 +53,19 @@ function toast(msg, isError = false) {
 
 async function api(path, options = {}) {
   const res = await fetch(API + path, {
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'x-admin-key': getAdminKey() },
     ...options,
   });
+  if (res.status === 401) {
+    clearAdminKey();
+    showLogin('Неверный ключ доступа. Попробуйте снова.');
+    throw new Error('Требуется вход');
+  }
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || `Ошибка ${res.status}`);
   return data;
 }
 
-// --- Загрузка и отрисовка списка ---
 async function loadApplications() {
   const params = new URLSearchParams();
   if (currentStatus) params.set('status', currentStatus);
@@ -98,7 +113,6 @@ function renderTable(items) {
     )
     .join('');
 
-  // Хранилище данных для редактирования
   window._apps = Object.fromEntries(items.map((a) => [a._id, a]));
 }
 
@@ -113,7 +127,6 @@ function renderStats(items) {
     <div class="stat"><b>${counts.rejected}</b><span>Отклонено</span></div>`;
 }
 
-// --- Модалка ---
 function openModal(app = null) {
   form.reset();
   formError.textContent = '';
@@ -134,7 +147,6 @@ function closeModal() {
   modal.hidden = true;
 }
 
-// --- Обработчики ---
 document.getElementById('newBtn').addEventListener('click', () => openModal());
 document.getElementById('modalClose').addEventListener('click', closeModal);
 document.getElementById('cancelBtn').addEventListener('click', closeModal);
@@ -168,7 +180,6 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-// Делегирование кликов в таблице
 tableBody.addEventListener('click', async (e) => {
   const editId = e.target.closest('.edit-btn')?.dataset.id;
   const delId = e.target.closest('.del-btn')?.dataset.id;
@@ -187,7 +198,6 @@ tableBody.addEventListener('click', async (e) => {
   }
 });
 
-// Смена статуса прямо в таблице
 tableBody.addEventListener('change', async (e) => {
   const sel = e.target.closest('.status-select');
   if (!sel) return;
@@ -204,7 +214,6 @@ tableBody.addEventListener('change', async (e) => {
   }
 });
 
-// Фильтры по статусу
 document.getElementById('statusFilters').addEventListener('click', (e) => {
   const chip = e.target.closest('.chip');
   if (!chip) return;
@@ -214,7 +223,6 @@ document.getElementById('statusFilters').addEventListener('click', (e) => {
   loadApplications();
 });
 
-// Поиск (с задержкой)
 document.getElementById('searchInput').addEventListener('input', (e) => {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(() => {
@@ -223,7 +231,6 @@ document.getElementById('searchInput').addEventListener('input', (e) => {
   }, 300);
 });
 
-// Проверка соединения с API
 async function checkHealth() {
   try {
     const h = await api('/health');
@@ -235,6 +242,43 @@ async function checkHealth() {
   }
 }
 
-// Старт
-checkHealth();
-loadApplications();
+const loginOverlay = document.getElementById('loginOverlay');
+const loginForm = document.getElementById('loginForm');
+const loginKeyInput = document.getElementById('loginKey');
+const loginError = document.getElementById('loginError');
+const appRoot = document.getElementById('appRoot');
+
+function showLogin(message = '') {
+  appRoot.hidden = true;
+  loginOverlay.hidden = false;
+  loginError.textContent = message;
+  loginKeyInput.value = '';
+  loginKeyInput.focus();
+}
+
+function showApp() {
+  loginOverlay.hidden = true;
+  appRoot.hidden = false;
+}
+
+async function tryEnterApp() {
+  showApp();
+  await checkHealth();
+  try {
+    await loadApplications();
+  } catch {
+    // ошибка уже обработана внутри api()/loadApplications()
+  }
+}
+
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  setAdminKey(loginKeyInput.value.trim());
+  await tryEnterApp();
+});
+
+if (getAdminKey()) {
+  tryEnterApp();
+} else {
+  showLogin();
+}

@@ -7,6 +7,25 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Экран входа -->
+  <div class="modal-overlay" id="loginOverlay">
+    <div class="modal login-box">
+      <div class="modal-head">
+        <h2>Вход в админку</h2>
+      </div>
+      <form id="loginForm">
+        <label>Ключ доступа
+          <input type="password" id="loginKey" required autocomplete="current-password" />
+        </label>
+        <div class="form-error" id="loginError"></div>
+        <div class="modal-actions">
+          <button type="submit" class="btn primary">Войти</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="appRoot" hidden>
   <header class="topbar">
     <div class="brand">
       <span class="logo">M</span>
@@ -94,6 +113,7 @@
   </div>
 
   <div id="toast" class="toast" hidden></div>
+  </div>
 
   <script src="app.js"></script>
 </body>

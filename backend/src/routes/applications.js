@@ -6,13 +6,17 @@ import {
   updateApplication,
   deleteApplication,
 } from '../controllers/applicationController.js';
+import { requireAdminKey } from '../middleware/requireAdminKey.js';
 
 const router = Router();
 
-router.get('/', listApplications);
-router.get('/:id', getApplication);
+// Публичный эндпоинт — сюда шлёт данные форма заявки на сайте
 router.post('/', createApplication);
-router.patch('/:id', updateApplication);
-router.delete('/:id', deleteApplication);
+
+// Защищённые эндпоинты — только для админки
+router.get('/', requireAdminKey, listApplications);
+router.get('/:id', requireAdminKey, getApplication);
+router.patch('/:id', requireAdminKey, updateApplication);
+router.delete('/:id', requireAdminKey, deleteApplication);
 
 export default router;
