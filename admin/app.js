@@ -1,5 +1,5 @@
 // Адрес API бэкенда. Поменяйте при деплое.
-const API = 'http://localhost:4000/api';
+const API = 'https://mmm-backend-lwnf.onrender.com/api';
 
 const STATUS_LABELS = {
   new: 'Новая',
