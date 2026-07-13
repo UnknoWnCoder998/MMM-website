@@ -15,6 +15,7 @@ function clearAdminKey() {
   sessionStorage.removeItem(ADMIN_KEY_STORAGE);
 }
 
+
 const STATUS_LABELS = {
   new: 'Новая',
   in_progress: 'В работе',
