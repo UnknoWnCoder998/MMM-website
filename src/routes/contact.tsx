@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { LeadForm } from "@/components/LeadForm";
 
@@ -36,22 +36,6 @@ function ContactPage() {
       <section className="container-luxe grid gap-12 py-20 lg:grid-cols-[2fr_3fr]">
         <div className="space-y-6">
           <ContactRow
-            icon={<Mail className="h-4 w-4" />}
-            label={t("form.email")}
-            value="realestateadm1nmm@gmail.com"
-            href="mailto:realestateadm1nmm@gmail.com"
-          />
-          <ContactRow
-            icon={<Phone className="h-4 w-4" />}
-            label={t("form.phone")}
-            value="+971 — coming soon"
-          />
-          <ContactRow
-            icon={<MessageCircle className="h-4 w-4" />}
-            label="WhatsApp"
-            value="+971 — coming soon"
-          />
-          <ContactRow
             icon={<MapPin className="h-4 w-4" />}
             label={lang === "ru" ? "Офис" : lang === "ar" ? "المكتب" : "Office"}
             value="Dubai, UAE"
@@ -62,9 +46,15 @@ function ContactPage() {
               {lang === "ru" ? "Часы работы" : lang === "ar" ? "ساعات العمل" : "Working hours"}
             </div>
             <div className="mt-3 space-y-1 text-sm text-muted-foreground">
-              <p>Mon — Sat · 09:00 – 21:00 GST</p>
               <p>
-                Sun ·{" "}
+                {lang === "ru"
+                  ? "Пн — Сб · 09:00 – 21:00 GST"
+                  : lang === "ar"
+                    ? "الإثنين — السبت · 09:00 – 21:00 بتوقيت الخليج"
+                    : "Mon — Sat · 09:00 – 21:00 GST"}
+              </p>
+              <p>
+                {lang === "ru" ? "Вс" : lang === "ar" ? "الأحد" : "Sun"} ·{" "}
                 {lang === "ru" ? "по запросу" : lang === "ar" ? "حسب الطلب" : "by appointment"}
               </p>
             </div>

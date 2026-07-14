@@ -1,7 +1,29 @@
 import damacIslands2 from "@/assets/project-damac-islands-2.jpg";
+import damacIslands2_1 from "@/assets/project-damac-islands-2-1.jpg";
+import damacIslands2_2 from "@/assets/project-damac-islands-2-2.jpg";
+import damacIslands2_3 from "@/assets/project-damac-islands-2-3.jpg";
+import damacIslands2_4 from "@/assets/project-damac-islands-2-4.jpg";
+import damacIslands2_5 from "@/assets/project-damac-islands-2-5.jpg";
+import damacIslands2_6 from "@/assets/project-damac-islands-2-6.jpg";
+import damacIslands2_7 from "@/assets/project-damac-islands-2-7.jpg";
+import damacIslands2_8 from "@/assets/project-damac-islands-2-8.jpg";
 import riverside from "@/assets/project-riverside.jpg";
+import riverside_1 from "@/assets/project-riverside-1.jpg";
+import riverside_2 from "@/assets/project-riverside-2.jpg";
+import riverside_3 from "@/assets/project-riverside-3.jpg";
+import riverside_4 from "@/assets/project-riverside-4.jpg";
 import chelseaResidences from "@/assets/project-chelsea-residences.jpg";
+import chelseaResidences_1 from "@/assets/project-chelsea-residences-1.jpg";
+import chelseaResidences_2 from "@/assets/project-chelsea-residences-2.jpg";
+import chelseaResidences_3 from "@/assets/project-chelsea-residences-3.jpg";
+import chelseaResidences_4 from "@/assets/project-chelsea-residences-4.jpg";
+import chelseaResidences_5 from "@/assets/project-chelsea-residences-5.jpg";
+import chelseaResidences_6 from "@/assets/project-chelsea-residences-6.jpg";
 import valencia from "@/assets/project-valencia.jpg";
+import valencia_1 from "@/assets/project-valencia-1.jpg";
+import valencia_2 from "@/assets/project-valencia-2.jpg";
+import valencia_3 from "@/assets/project-valencia-3.jpg";
+import valencia_4 from "@/assets/project-valencia-4.jpg";
 
 export type Localized = { ru: string; en: string; ar: string };
 
@@ -26,7 +48,17 @@ export const projects: Project[] = [
     slug: "damac-islands-2",
     name: "DAMAC Islands 2",
     image: damacIslands2,
-    gallery: [damacIslands2],
+    gallery: [
+      damacIslands2,
+      damacIslands2_1,
+      damacIslands2_2,
+      damacIslands2_3,
+      damacIslands2_4,
+      damacIslands2_5,
+      damacIslands2_6,
+      damacIslands2_7,
+      damacIslands2_8,
+    ],
     location: { ru: "Dubailand", en: "Dubailand", ar: "دبي لاند" },
     type: { 
       ru: "Ощутите атмосферу курортной жизни в DAMAC Islands 2 — эксклюзивном сообществе с роскошными виллами, вдохновлёнными самыми красивыми островами мира. Жителей ждут живописные лагуны, инфраструктура мирового уровня и спокойная атмосфера в одном из новейших мастер-проектов Дубая.", 
@@ -46,7 +78,7 @@ export const projects: Project[] = [
     slug: "riverside",
     name: "DAMAC Riverside",
     image: riverside,
-    gallery: [riverside],
+    gallery: [riverside, riverside_1, riverside_2, riverside_3, riverside_4],
     location: { ru: "Dubai Investments Park", en: "Dubai Investments Park", ar: "مجمع دبي للاستثمار" },
     type: { 
       ru: "Откройте для себя DAMAC Riverside — современное прибрежное сообщество с элегантными виллами и таунхаусами, окружёнными зелёными ландшафтами, кристально чистыми лагунами и премиальной инфраструктурой. Наслаждайтесь спокойной жизнью с удобным доступом к ключевым районам и достопримечательностям Дубая.", 
@@ -66,7 +98,15 @@ export const projects: Project[] = [
     slug: "chelsea-residences",
     name: "Chelsea Residences",
     image: chelseaResidences,
-    gallery: [chelseaResidences],
+    gallery: [
+      chelseaResidences,
+      chelseaResidences_1,
+      chelseaResidences_2,
+      chelseaResidences_3,
+      chelseaResidences_4,
+      chelseaResidences_5,
+      chelseaResidences_6,
+    ],
     location: { ru: "Dubai Maritime City", en: "Dubai Maritime City", ar: "مدينة دبي البحرية" },
     type: { 
       ru: "Откройте для себя роскошную жизнь у воды в DAMAC Chelsea Residences, расположенном в Dubai Maritime City. Этот премиальный жилой комплекс, созданный в сотрудничестве с футбольным клубом Chelsea FC, предлагает элегантные интерьеры, первоклассную инфраструктуру и захватывающие виды на море в одном из самых престижных районов Дубая.", 
@@ -86,7 +126,7 @@ export const projects: Project[] = [
     slug: "valencia",
     name: "Valencia",
     image: valencia,
-    gallery: [valencia],
+    gallery: [valencia, valencia_1, valencia_2, valencia_3, valencia_4],
     location: { ru: "Dubai", en: "Dubai", ar: "دبي" },
     type: { 
       ru: "Valencia by DAMAC — это современный взгляд на роскошную жизнь, вдохновлённый элегантностью Средиземноморья. Расположенный в динамично развивающемся районе, этот жилой комплекс сочетает комфорт, стиль и атмосферу спокойствия. Каждая резиденция тщательно продумана для тех, кто ценит высокий уровень жизни, современные удобства и возможность наслаждаться тишиной вдали от городской суеты, оставаясь при этом рядом со всем необходимым.", 

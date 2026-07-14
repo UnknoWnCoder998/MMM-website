@@ -31,8 +31,7 @@ export function Header() {
 
         <nav className="hidden items-center gap-8 lg:flex">
           {navItems.map((item) => {
-            const active =
-              pathname === item.to || (item.to !== "/" && pathname.startsWith(item.to));
+            const active = pathname === item.to || pathname.startsWith(item.to);
             return (
               <Link
                 key={item.to}

@@ -1,8 +1,17 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { useRef } from "react";
 import { ArrowLeft } from "lucide-react";
+import Autoplay from "embla-carousel-autoplay";
 import { useI18n } from "@/lib/i18n";
 import { formatPrice, projects } from "@/lib/projects";
 import { LeadForm } from "@/components/LeadForm";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/projects/$slug")({
   loader: ({ params }) => {
@@ -38,6 +47,9 @@ export const Route = createFileRoute("/projects/$slug")({
 function ProjectDetail() {
   const { project } = Route.useLoaderData();
   const { t, lang } = useI18n();
+  const autoplay = useRef(
+    Autoplay({ delay: 300, stopOnInteraction: false, stopOnMouseEnter: true }),
+  );
 
   return (
     <>
@@ -64,7 +76,7 @@ function ProjectDetail() {
 
       <section className="border-b border-border/40 bg-ink">
         <div className="container-luxe grid grid-cols-2 gap-6 py-10 md:grid-cols-4">
-          <Spec label={t("project.from")} value={formatPrice(project.priceFromAed, lang)} />
+          <Spec label={t("project.from")} value={formatPrice(project.priceFromAed, lang)} highlight />
           <Spec label={t("project.handover")} value={project.handover} />
           <Spec label={t("project.type")} value={project.type[lang]} />
           <Spec label={t("project.payment")} value={project.paymentPlan} />
@@ -95,19 +107,32 @@ function ProjectDetail() {
 
           <div className="mt-12">
             <div className="eyebrow">{t("project.gallery")}</div>
-            <div className="mt-6 grid gap-3 sm:grid-cols-3">
-              {project.gallery.map((src: string, i: number) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt={`${project.name} ${i + 1}`}
-                  loading="lazy"
-                  width={1280}
-                  height={960}
-                  className="aspect-[4/3] w-full object-cover"
-                />
-              ))}
-            </div>
+            <Carousel
+              className="mt-6"
+              opts={{ loop: true, align: "start" }}
+              plugins={[autoplay.current]}
+            >
+              <CarouselContent>
+                {project.gallery.map((src: string, i: number) => (
+                  <CarouselItem key={i} className="sm:basis-1/2 lg:basis-1/3">
+                    <img
+                      src={src}
+                      alt={`${project.name} ${i + 1}`}
+                      loading="lazy"
+                      width={1280}
+                      height={960}
+                      className="aspect-[4/3] w-full object-cover"
+                    />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              {project.gallery.length > 1 && (
+                <>
+                  <CarouselPrevious className="left-2 border-gold/40 bg-ink/70 text-gold hover:bg-ink hover:text-gold-soft" />
+                  <CarouselNext className="right-2 border-gold/40 bg-ink/70 text-gold hover:bg-ink hover:text-gold-soft" />
+                </>
+              )}
+            </Carousel>
           </div>
         </div>
 
@@ -122,11 +147,19 @@ function ProjectDetail() {
   );
 }
 
-function Spec({ label, value }: { label: string; value: string }) {
+function Spec({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
   return (
     <div>
       <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">{label}</div>
-      <div className="mt-2 font-display text-xl text-foreground">{value}</div>
+      <div
+        className={
+          highlight
+            ? "text-price mt-2 text-2xl text-gold md:text-3xl"
+            : "mt-2 font-display text-xl text-foreground"
+        }
+      >
+        {value}
+      </div>
     </div>
   );
 }

@@ -1,10 +1,15 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
-@import "@fontsource/cormorant-garamond/400.css";
-@import "@fontsource/cormorant-garamond/500.css";
-@import "@fontsource/cormorant-garamond/600.css";
-@import "@fontsource/cormorant-garamond/700.css";
+@import "@fontsource/playfair-display/500.css";
+@import "@fontsource/playfair-display/600.css";
+@import "@fontsource/playfair-display/700.css";
+@import "@fontsource/playfair-display/800.css";
+@import "@fontsource/playfair-display/900.css";
+@import "@fontsource/unbounded/600.css";
+@import "@fontsource/unbounded/700.css";
+@import "@fontsource/unbounded/800.css";
+@import "@fontsource/unbounded/900.css";
 @import "@fontsource/inter/300.css";
 @import "@fontsource/inter/400.css";
 @import "@fontsource/inter/500.css";
@@ -13,7 +18,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-display: "Playfair Display", "Times New Roman", serif;
+  --font-impact: "Unbounded", "Playfair Display", sans-serif;
   --font-sans: "Inter", system-ui, sans-serif;
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -109,7 +115,7 @@
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 600;
     letter-spacing: -0.01em;
   }
 
@@ -130,6 +136,13 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+@utility text-price {
+  font-family: var(--font-impact);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-variant-numeric: lining-nums proportional-nums;
 }
 
 @utility hairline {
