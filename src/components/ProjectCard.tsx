@@ -1,20 +1,28 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import { formatPrice, type Project } from "@/lib/projects";
+import { formatPrice, imageFocalPoints, type Project } from "@/lib/projects";
+import { LeadForm } from "@/components/LeadForm";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 export function ProjectCard({ project }: { project: Project }) {
   const { t, lang } = useI18n();
   const images = project.gallery.length > 0 ? project.gallery : [project.image];
   const [activeIndex, setActiveIndex] = useState(0);
+  const [open, setOpen] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const startCycling = () => {
     if (images.length <= 1) return;
     intervalRef.current = setInterval(() => {
       setActiveIndex((i) => (i + 1) % images.length);
-    }, 1400);
+    }, 800);
   };
 
   const stopCycling = () => {
@@ -28,10 +36,11 @@ export function ProjectCard({ project }: { project: Project }) {
   useEffect(() => () => stopCycling(), []);
 
   return (
-    <Link
-      to="/projects/$slug"
-      params={{ slug: project.slug }}
-      className="group block overflow-hidden border border-border/50 bg-card transition-colors hover:border-gold/60"
+    <>
+    <button
+      type="button"
+      onClick={() => setOpen(true)}
+      className="group block w-full overflow-hidden border border-border/50 bg-card text-left transition-colors hover:border-gold/60"
       onMouseEnter={startCycling}
       onMouseLeave={stopCycling}
     >
@@ -47,7 +56,11 @@ export function ProjectCard({ project }: { project: Project }) {
             className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ease-in-out group-hover:scale-105 ${
               i === activeIndex ? "opacity-100" : "opacity-0"
             }`}
-            style={{ transitionProperty: "opacity, transform", transitionDuration: "500ms, 1200ms" }}
+            style={{
+              transitionProperty: "opacity, transform",
+              transitionDuration: "500ms, 1200ms",
+              objectPosition: imageFocalPoints[src] ?? "50% 50%",
+            }}
           />
         ))}
         <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-transparent" />
@@ -89,6 +102,17 @@ export function ProjectCard({ project }: { project: Project }) {
           </div>
         </div>
       </div>
-    </Link>
+    </button>
+
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="font-display text-2xl text-foreground">{project.name}</DialogTitle>
+          <DialogDescription>{t("form.project")}</DialogDescription>
+        </DialogHeader>
+        <LeadForm defaultProject={project.name} />
+      </DialogContent>
+    </Dialog>
+    </>
   );
 }

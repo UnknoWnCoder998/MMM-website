@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { ArrowLeft } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useI18n } from "@/lib/i18n";
-import { formatPrice, projects } from "@/lib/projects";
+import { formatPrice, imageFocalPoints, projects } from "@/lib/projects";
 import { LeadForm } from "@/components/LeadForm";
 import {
   Carousel,
@@ -60,6 +60,7 @@ function ProjectDetail() {
           width={1280}
           height={960}
           className="absolute inset-0 -z-10 h-full w-full object-cover"
+          style={{ objectPosition: imageFocalPoints[project.image] ?? "50% 50%" }}
         />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-ink/40 via-ink/40 to-ink" />
         <div className="container-luxe flex min-h-[70vh] flex-col justify-end pb-16 pt-32">
@@ -122,6 +123,7 @@ function ProjectDetail() {
                       width={1280}
                       height={960}
                       className="aspect-[4/3] w-full object-cover"
+                      style={{ objectPosition: imageFocalPoints[src] ?? "50% 50%" }}
                     />
                   </CarouselItem>
                 ))}

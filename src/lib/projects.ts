@@ -43,6 +43,15 @@ export type Project = {
 
 const aed = (n: number) => n;
 
+// Некоторые фото по умолчанию обрезаются в карточках по центру (object-cover),
+// но для панорамных снимков центр кадра не всегда совпадает со зданием.
+// Здесь задаём точку обрезки вручную для конкретных фото (по ссылке на файл).
+export const imageFocalPoints: Record<string, string> = {
+  [chelseaResidences]: "20% 50%",
+  [chelseaResidences_6]: "20% 50%",
+  [valencia_2]: "78% 50%",
+};
+
 export const projects: Project[] = [
   {
     slug: "damac-islands-2",

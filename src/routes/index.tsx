@@ -15,7 +15,8 @@ import {
   Check,
   Star,
 } from "lucide-react";
-import heroImg from "@/assets/hero-damac-building.jpg";
+import heroVideo from "@/assets/hero-video.mp4";
+import heroPoster from "@/assets/hero-video-poster.jpg";
 import { useI18n } from "@/lib/i18n";
 import { projects } from "@/lib/projects";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -218,79 +219,40 @@ function Hero() {
   return (
     <section className="relative isolate overflow-hidden bg-ink">
       <div className="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:aspect-[21/9]">
-        <img
-          src={heroImg}
-          alt="DAMAC Properties building at night"
-          width={1536}
-          height={1024}
-          className="absolute inset-0 h-full w-full object-cover object-[78%_42%]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/10 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent" />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={heroPoster}
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source src={heroVideo} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/25 to-transparent" />
 
         <div className="container-luxe absolute inset-0 flex flex-col justify-center py-16">
           <div className="max-w-2xl">
-            <div className="eyebrow">{t("hero.eyebrow")}</div>
-            <div className="py-4 sm:py-5 md:py-6">
+            <div className="eyebrow drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">{t("hero.eyebrow")}</div>
+            <div className="py-4 sm:py-5 md:py-6 drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]">
             <img src={damacLogo} alt="DAMAC" className="h-8 w-auto sm:h-11 md:h-16"/>
             </div>
-            <div className="mt-1 text-xl uppercase tracking-[0.4em] text-foreground/90 sm:text-2xl md:text-3xl">
+            <div className="mt-1 text-xl uppercase tracking-[0.4em] text-foreground/90 drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)] sm:text-2xl md:text-3xl">
               Properties
             </div>
-            <p className="mt-6 max-w-xl text-sm text-muted-foreground sm:text-base md:text-lg">
+            <p className="mt-6 max-w-xl text-sm text-foreground/80 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)] sm:text-base md:text-lg">
               {t("hero.subtitle")}
             </p>
             <div className="mt-8 md:mt-10">
-              <Link to="/services" className="btn-ghost-gold">
+              <Link to="/services" className="btn-ghost-gold backdrop-blur-sm">
                 {t("hero.cta")} <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           </div>
         </div>
       </div>
-
-      <div className="relative">
-        <div className="container-luxe">
-          <div className="hairline" />
-        </div>
-        <div className="container-luxe grid grid-cols-2 divide-x divide-border/40 py-10 sm:grid-cols-4">
-          <HeroFeature
-            title={t("hero.feature.1.title")}
-            body={t("hero.feature.1.body")}
-            icon={<Building2 className="h-5 w-5" />}
-          />
-          <HeroFeature
-            title={t("hero.feature.2.title")}
-            body={t("hero.feature.2.body")}
-            icon={<Compass className="h-5 w-5" />}
-          />
-          <HeroFeature
-            title={t("hero.feature.3.title")}
-            body={t("hero.feature.3.body")}
-            icon={<ShieldCheck className="h-5 w-5" />}
-          />
-          <HeroFeature
-            title={t("hero.feature.4.title")}
-            body={t("hero.feature.4.body")}
-            icon={<LineChart className="h-5 w-5" />}
-          />
-        </div>
-      </div>
     </section>
-  );
-}
-
-function HeroFeature({ icon, title, body }: { icon: ReactNode; title: string; body: string }) {
-  return (
-    <div className="flex items-start gap-3 px-4 first:pl-0 last:pr-0">
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center text-muted-foreground">
-        {icon}
-      </div>
-      <div>
-        <h3 className="text-xs font-medium uppercase tracking-[0.16em] text-foreground">{title}</h3>
-        <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{body}</p>
-      </div>
-    </div>
   );
 }
 
