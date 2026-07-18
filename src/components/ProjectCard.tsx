@@ -40,11 +40,11 @@ export function ProjectCard({ project }: { project: Project }) {
     <button
       type="button"
       onClick={() => setOpen(true)}
-      className="group block w-full overflow-hidden border border-border/50 bg-card text-left transition-colors hover:border-gold/60"
+      className="group flex w-full flex-col overflow-hidden border border-border/50 bg-card text-left transition-colors hover:border-gold/60"
       onMouseEnter={startCycling}
       onMouseLeave={stopCycling}
     >
-      <div className="relative aspect-[4/3] overflow-hidden">
+      <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
         {images.map((src, i) => (
           <img
             key={src + i}
