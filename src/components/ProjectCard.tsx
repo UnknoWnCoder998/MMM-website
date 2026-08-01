@@ -44,7 +44,7 @@ export function ProjectCard({ project }: { project: Project }) {
       onMouseEnter={startCycling}
       onMouseLeave={stopCycling}
     >
-      <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
+      <div className="relative aspect-[3/4] shrink-0 overflow-hidden sm:aspect-[4/5]">
         {images.map((src, i) => (
           <img
             key={src + i}
@@ -80,9 +80,9 @@ export function ProjectCard({ project }: { project: Project }) {
           </div>
         )}
       </div>
-      <div className="flex flex-col gap-4 p-6">
+      <div className="flex flex-col gap-3 p-5">
         <div className="flex items-start justify-between gap-4">
-          <h3 className="font-display text-2xl text-foreground">{project.name}</h3>
+          <h3 className="font-display text-xl text-foreground">{project.name}</h3>
           <ArrowUpRight className="h-5 w-5 shrink-0 text-gold transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         </div>
         <p className="text-sm text-muted-foreground">{project.type[lang]}</p>

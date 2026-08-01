@@ -1,7 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin } from "lucide-react";
+import { MapPin, Phone, MessageCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { LeadForm } from "@/components/LeadForm";
+
+const PHONE_DISPLAY = "+971 50 874 9903";
+const PHONE_HREF = "tel:+971508749903";
+const WHATSAPP_HREF = "https://wa.me/971508749903";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -35,6 +39,18 @@ function ContactPage() {
 
       <section className="container-luxe grid gap-12 py-20 lg:grid-cols-[2fr_3fr]">
         <div className="space-y-6">
+          <ContactRow
+            icon={<MessageCircle className="h-4 w-4" />}
+            label={t("contact.whatsapp")}
+            value={PHONE_DISPLAY}
+            href={WHATSAPP_HREF}
+          />
+          <ContactRow
+            icon={<Phone className="h-4 w-4" />}
+            label={t("contact.call")}
+            value={PHONE_DISPLAY}
+            href={PHONE_HREF}
+          />
           <ContactRow
             icon={<MapPin className="h-4 w-4" />}
             label={lang === "ru" ? "Офис" : lang === "ar" ? "المكتب" : "Office"}

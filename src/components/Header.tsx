@@ -1,7 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 import { useState } from "react";
 import { useI18n, type Lang } from "@/lib/i18n";
+
+const PHONE_DISPLAY = "+971 50 874 9903";
+const PHONE_HREF = "tel:+971508749903";
 
 const navItems = [
   { to: "/about", key: "nav.about" },
@@ -47,6 +50,13 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <a
+            href={PHONE_HREF}
+            className="hidden items-center gap-2 text-xs tracking-[0.05em] text-muted-foreground transition-colors hover:text-gold md:flex"
+          >
+            <Phone className="h-3.5 w-3.5 text-gold" />
+            {PHONE_DISPLAY}
+          </a>
           <LangSwitch lang={lang} setLang={setLang} />
           <Link to="/contact" className="btn-ghost-gold hidden md:inline-flex">
             {t("nav.cta")}
@@ -77,6 +87,13 @@ export function Header() {
             <Link to="/contact" onClick={() => setOpen(false)} className="btn-gold mt-2 self-start">
               {t("nav.cta")}
             </Link>
+            <a
+              href={PHONE_HREF}
+              className="flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-gold"
+            >
+              <Phone className="h-3.5 w-3.5 text-gold" />
+              {PHONE_DISPLAY}
+            </a>
           </nav>
         </div>
       )}

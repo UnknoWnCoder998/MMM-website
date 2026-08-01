@@ -115,6 +115,9 @@ const dictionaries: Record<Lang, Dict> = {
     "footer.nav": "Навигация",
     "footer.contact": "Контакты",
     "footer.legal": "Юридическая информация",
+
+    "contact.whatsapp": "Написать в WhatsApp",
+    "contact.call": "Позвонить",
   },
   en: {
     "nav.home": "Home",
@@ -225,6 +228,9 @@ const dictionaries: Record<Lang, Dict> = {
     "footer.nav": "Navigation",
     "footer.contact": "Contact",
     "footer.legal": "Legal",
+
+    "contact.whatsapp": "Message on WhatsApp",
+    "contact.call": "Call us",
   },
   ar: {
     "nav.home": "الرئيسية",
@@ -333,6 +339,9 @@ const dictionaries: Record<Lang, Dict> = {
     "footer.nav": "التنقل",
     "footer.contact": "اتصل",
     "footer.legal": "قانوني",
+
+    "contact.whatsapp": "راسلنا عبر واتساب",
+    "contact.call": "اتصل بنا",
   },
 };
 

@@ -1,6 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { MapPin, Phone, MessageCircle } from "lucide-react";
+
+const PHONE_DISPLAY = "+971 50 874 9903";
+const PHONE_HREF = "tel:+971508749903";
+const WHATSAPP_HREF = "https://wa.me/971508749903";
+
 export function Footer() {
   const { t } = useI18n();
   return (
@@ -47,6 +52,33 @@ export function Footer() {
               <Link to="/contact" className="text-muted-foreground hover:text-gold">
                 {t("nav.contact")}
               </Link>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <div className="eyebrow mb-4">{t("footer.contact")}</div>
+          <ul className="space-y-3 text-sm">
+            <li>
+              <a
+                href={WHATSAPP_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-muted-foreground hover:text-gold"
+              >
+                <MessageCircle className="h-4 w-4 text-gold" />
+                {t("contact.whatsapp")}
+              </a>
+            </li>
+            <li>
+              <a href={PHONE_HREF} className="flex items-center gap-2 text-muted-foreground hover:text-gold">
+                <Phone className="h-4 w-4 text-gold" />
+                {PHONE_DISPLAY}
+              </a>
+            </li>
+            <li className="flex items-center gap-2 text-muted-foreground">
+              <MapPin className="h-4 w-4 text-gold" />
+              Dubai, UAE
             </li>
           </ul>
         </div>

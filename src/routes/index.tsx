@@ -3,17 +3,11 @@ import { type ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  Building2,
   Handshake,
-  LineChart,
   ShieldCheck,
-  Percent,
-  BadgeCheck,
-  Globe,
   UserCheck,
   Compass,
   Check,
-  Star,
 } from "lucide-react";
 import heroVideo from "@/assets/hero-video.mp4";
 import heroPoster from "@/assets/hero-video-poster.jpg";
@@ -48,15 +42,14 @@ function Index() {
   return (
     <>
       <Hero />
-      <StatsBar />
 
       {/* Featured projects */}
-      <section className="container-luxe py-24">
+      <section className="container-luxe py-16 md:py-20">
         <div className="text-center">
           <div className="eyebrow">{t("section.featured.eyebrow")}</div>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {featured.map((p) => (
             <ProjectCard key={p.slug} project={p} />
           ))}
@@ -97,17 +90,8 @@ function Index() {
               body={t("section.why.4.body")}
             />
           </div>
-          <div className="mt-16 text-center">
-            <div className="hairline mx-auto mb-6 max-w-xs" />
-            <p className="font-display text-xl italic text-muted-foreground">
-              {t("footer.signature")}
-            </p>
-          </div>
         </div>
       </section>
-
-      {/* Testimonials */}
-      <Testimonials />
 
       {/* CTA */}
       <section className="py-24">
@@ -142,83 +126,11 @@ function TrustItem({ children }: { children: ReactNode }) {
   );
 }
 
-function Testimonials() {
-  const { t, lang } = useI18n();
-  const items = [
-    {
-      name: "Andrei K.",
-      role: {
-        ru: "Инвестор, Cavalli Tower",
-        en: "Investor, Cavalli Tower",
-        ar: "مستثمر، Cavalli Tower",
-      },
-      quote: {
-        ru: "Подобрали юнит с лучшей доходностью за неделю, без давления и навязывания. Полная прозрачность на каждом шаге сделки.",
-        en: "They found me the best-yield unit within a week — no pressure, full transparency at every step.",
-        ar: "وجدوا لي أفضل وحدة من حيث العائد خلال أسبوع — دون ضغط وبشفافية كاملة.",
-      },
-    },
-    {
-      name: "Layla M.",
-      role: {
-        ru: "Инвестор, DAMAC Lagoons",
-        en: "Investor, DAMAC Lagoons",
-        ar: "مستثمرة، DAMAC Lagoons",
-      },
-      quote: {
-        ru: "Непредвзятая аналитика помогла выбрать правильный проект под мою стратегию. Сопровождение после сделки — на высшем уровне.",
-        en: "Their unbiased analysis helped me choose the right project for my strategy. Post-sale support has been outstanding.",
-        ar: "ساعدني تحليلهم المحايد في اختيار المشروع المناسب لاستراتيجيتي. الدعم بعد البيع كان ممتازاً.",
-      },
-    },
-    {
-      name: "Dmitri S.",
-      role: { ru: "Инвестор, Safa One", en: "Investor, Safa One", ar: "مستثمر، Safa One" },
-      quote: {
-        ru: "Команда MMM объяснила все риски и помогла зафиксировать льготу 4% DLD. Рекомендую тем, кто инвестирует впервые.",
-        en: "The MMM team walked me through every risk and locked in the 4% DLD waiver for me. Highly recommend for first-time investors.",
-        ar: "شرح فريق MMM كل المخاطر وساعدني في الحصول على إعفاء 4%. أنصح به للمستثمرين لأول مرة.",
-      },
-    },
-  ];
-
-  return (
-    <section className="border-t border-border/40 bg-ink py-24">
-      <div className="container-luxe">
-        <div className="text-center">
-          <div className="eyebrow">{t("section.testimonials.eyebrow")}</div>
-          <h2 className="mt-3 font-display text-4xl text-foreground md:text-5xl">
-            {t("section.testimonials.title")}
-          </h2>
-        </div>
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {items.map((it, i) => (
-            <div key={i} className="flex flex-col border border-border/60 bg-background p-8">
-              <div className="flex gap-1 text-gold">
-                {Array.from({ length: 5 }).map((_, s) => (
-                  <Star key={s} className="h-3.5 w-3.5 fill-current" />
-                ))}
-              </div>
-              <p className="mt-5 flex-1 text-sm leading-relaxed text-muted-foreground">
-                "{it.quote[lang]}"
-              </p>
-              <div className="mt-6 border-t border-border/40 pt-4">
-                <div className="font-display text-lg text-foreground">{it.name}</div>
-                <div className="text-xs uppercase tracking-[0.18em] text-gold">{it.role[lang]}</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function Hero() {
   const { t } = useI18n();
   return (
     <section className="relative isolate overflow-hidden bg-ink">
-      <div className="relative aspect-[16/10] w-full sm:aspect-[2/1] lg:aspect-[21/9]">
+      <div className="relative h-[100svh] w-full sm:h-auto sm:aspect-[2/1] lg:aspect-[21/9]">
         <video
           autoPlay
           loop
@@ -253,46 +165,6 @@ function Hero() {
         </div>
       </div>
     </section>
-  );
-}
-
-function StatsBar() {
-  const { t } = useI18n();
-  return (
-    <section className="border-y border-border/40 bg-ink">
-      <div className="container-luxe flex flex-col items-center justify-between gap-8 py-8 lg:flex-row">
-        <div className="flex flex-wrap items-center justify-center gap-8 lg:gap-12">
-          <div className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            <BadgeCheck className="h-4 w-4 text-gold" />
-            <span>
-              {t("badge.partner")} <span className="text-foreground">DAMAC</span>
-            </span>
-          </div>
-          <div className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">
-            <Handshake className="h-4 w-4 text-gold" />
-            <span>{t("badge.trusted")}</span>
-          </div>
-        </div>
-
-        <div className="hidden h-10 w-px bg-border/50 lg:block" />
-
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4 lg:gap-10">
-          <Stat icon={<Percent className="h-4 w-4" />} title={t("stat.dld.title")} />
-          <Stat icon={<ShieldCheck className="h-4 w-4" />} title={t("stat.developer.title")} />
-          <Stat icon={<LineChart className="h-4 w-4" />} title={t("stat.returns.title")} />
-          <Stat icon={<Globe className="h-4 w-4" />} title={t("stat.plans.title")} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Stat({ icon, title }: { icon: ReactNode; title: string }) {
-  return (
-    <div className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-foreground">
-      <span className="text-gold">{icon}</span>
-      <span>{title}</span>
-    </div>
   );
 }
 
