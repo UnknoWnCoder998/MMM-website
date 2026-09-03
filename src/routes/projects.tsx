@@ -1,25 +1,34 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useI18n } from "@/lib/i18n";
-import { projects } from "@/lib/projects";
+import { fetchCrmProjects } from "@/lib/crm-properties";
 import { ProjectCard } from "@/components/ProjectCard";
 
 export const Route = createFileRoute("/projects")({
+  // Fetched on the server for each request/build via TanStack Start's
+  // loader. Properties come from the CRM's public feed
+  // (crm.mmmestate.com) — see src/lib/crm-properties.ts. Whatever an
+  // agent has checked "Publish to Website" for in the CRM shows up
+  // here automatically next time this route is rendered/rebuilt.
+  loader: async () => {
+    const projects = await fetchCrmProjects();
+    return { projects };
+  },
   head: () => ({
     meta: [
-      { title: "DAMAC Projects — MMM Investment Advisory" },
+      { title: "Projects — MMM Investment Advisory" },
       {
         name: "description",
-        content:
-          "Browse flagship DAMAC Properties projects in Dubai — Cavalli Tower, DAMAC Bay, Safa One, DAMAC Lagoons, Volta and more.",
+        content: "Browse current property listings from MMM Investment Advisory in the UAE.",
       },
-      { property: "og:title", content: "DAMAC Projects — MMM Investment Advisory" },
-      { property: "og:description", content: "Flagship DAMAC residences and villas in Dubai." },
+      { property: "og:title", content: "Projects — MMM Investment Advisory" },
+      { property: "og:description", content: "Current UAE property listings." },
     ],
   }),
   component: ProjectsPage,
 });
 
 function ProjectsPage() {
+  const { projects } = Route.useLoaderData();
   const { t, lang } = useI18n();
   return (
     <>
@@ -28,21 +37,31 @@ function ProjectsPage() {
           <div className="eyebrow">{t("nav.projects")}</div>
           <h1 className="mt-3 max-w-3xl font-display text-5xl text-foreground md:text-6xl">
             {lang === "ru"
-              ? "Каталог проектов DAMAC"
+              ? "Каталог проектов"
               : lang === "ar"
-                ? "كتالوج مشاريع داماك"
-                : "DAMAC project catalogue"}
+                ? "كتالوج المشاريع"
+                : "Project catalogue"}
           </h1>
           <p className="mt-4 max-w-2xl text-muted-foreground">{t("section.featured.subtitle")}</p>
         </div>
       </section>
 
       <section className="container-luxe py-20">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {projects.map((p) => (
-            <ProjectCard key={p.slug} project={p} />
-          ))}
-        </div>
+        {projects.length === 0 ? (
+          <p className="text-center text-muted-foreground">
+            {lang === "ru"
+              ? "Скоро здесь появятся новые объекты."
+              : lang === "ar"
+                ? "قريباً ستتوفر عقارات جديدة هنا."
+                : "New listings will appear here shortly."}
+          </p>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {projects.map((p) => (
+              <ProjectCard key={p.slug} project={p} />
+            ))}
+          </div>
+        )}
       </section>
     </>
   );

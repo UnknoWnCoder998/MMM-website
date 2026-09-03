@@ -3,7 +3,8 @@ import { useRef } from "react";
 import { ArrowLeft } from "lucide-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useI18n } from "@/lib/i18n";
-import { formatPrice, imageFocalPoints, projects } from "@/lib/projects";
+import { formatPrice, imageFocalPoints } from "@/lib/projects";
+import { fetchCrmProjects } from "@/lib/crm-properties";
 import { LeadForm } from "@/components/LeadForm";
 import {
   Carousel,
@@ -14,8 +15,14 @@ import {
 } from "@/components/ui/carousel";
 
 export const Route = createFileRoute("/projects/$slug")({
-  loader: ({ params }) => {
-    const project = projects.find((p) => p.slug === params.slug);
+  loader: async ({ params }) => {
+    // Re-fetches the full CRM feed and finds the matching slug. This is
+    // simple rather than maximally efficient — fine for a catalogue of
+    // this size. If the listing count grows large, add a
+    // action=public-property&id=... single-item endpoint to the CRM
+    // instead of fetching the whole list per page view.
+    const allProjects = await fetchCrmProjects();
+    const project = allProjects.find((p) => p.slug === params.slug);
     if (!project) throw notFound();
     return { project };
   },
